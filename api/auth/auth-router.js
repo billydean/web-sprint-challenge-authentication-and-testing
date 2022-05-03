@@ -15,8 +15,6 @@ router.post('/register', uniqueUser, validateUser, async (req, res, next) => {
       res.status(201).json(saved)
     })
     .catch(next);
-  /*
-
 });
 
 router.post('/login', (req, res) => {
