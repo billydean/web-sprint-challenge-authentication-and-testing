@@ -1,10 +1,13 @@
 const router = require('express').Router();
+const { jwtSecret } = require('../secrets/index');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const uniqueUser = require('../middleware/uniqueUser');
+
 
 router.post('/register', (req, res) => {
   res.end('implement register, please!');
   /*
-    IMPLEMENT
-    You are welcome to build additional middlewares to help with the endpoint's functionality.
     DO NOT EXCEED 2^8 ROUNDS OF HASHING!
 
     1- In order to register a new account the client must provide `username` and `password`:
