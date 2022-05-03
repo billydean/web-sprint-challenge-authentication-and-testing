@@ -8,7 +8,7 @@ const checkCredentials = require('../middleware/checkCredentials');
 const User = require('./user-model.js');
 
 
-router.post('/register', uniqueUser, validateUser, async (req, res, next) => {
+router.post('/register', validateUser, uniqueUser, (req, res, next) => {
   const {password, username} = req.body;
   const hash = bcrypt.hashSync(password, 6);
   User.add({username, password: hash})

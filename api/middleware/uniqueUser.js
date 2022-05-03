@@ -13,7 +13,7 @@ async function uniqueUser (req,res,next) {
         .where('username', username)
         .first();
     if (user) {
-        res.status(400).json({message: 'username taken'});
+        next({status: 400, message: 'username taken'});
     } else {
         next();
     }
