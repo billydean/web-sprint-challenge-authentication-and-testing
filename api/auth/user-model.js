@@ -12,7 +12,15 @@ async function add(user) {
         .insert(user);
     return findUser(id);
 }
+
+function checkUserName(username) {
+    return db('users')
+        .where('username', username)
+        .first();
+}
+
 module.exports = {
     add,
-    findUser
+    findUser,
+    checkUserName,
 }
