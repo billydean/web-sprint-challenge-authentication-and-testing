@@ -4,32 +4,19 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const uniqueUser = require('../middleware/uniqueUser');
 const validateUser = require('../middleware/validateUser');
-const db = require('../../data/dbConfig');
+const User = require('./user-model.js');
 
 
-router.post('/register', uniqueUser, validateUser, (req, res) => {
+router.post('/register', uniqueUser, validateUser, async (req, res, next) => {
   const {password, username} = req.body;
-  const hash = bcrypt.hashSync(password, 8);
-
-
-  res.end('implement register, please!');
+  const hash = bcrypt.hashSync(password, 6);
+  User.add({username, password: hash})
+    .then(saved => {
+      res.status(201).json(saved)
+    })
+    .catch(next);
   /*
-    DO NOT EXCEED 2^8 ROUNDS OF HASHING!
 
-    1- In order to register a new account the client must provide `username` and `password`:
-      {
-        "username": "Captain Marvel", // must not exist already in the `users` table
-        "password": "foobar"          // needs to be hashed before it's saved
-      }
-
-    2- On SUCCESSFUL registration,
-      the response body should have `id`, `username` and `password`:
-      {
-        "id": 1,
-        "username": "Captain Marvel",
-        "password": "2a$08$jG.wIGR2S4hxuyWNcBf9MuoC4y0dNy7qC/LbmtuFBSdIhWks2LhpG"
-      }
-  */
 });
 
 router.post('/login', (req, res) => {
