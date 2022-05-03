@@ -3,9 +3,15 @@ const { jwtSecret } = require('../secrets/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const uniqueUser = require('../middleware/uniqueUser');
+const validateUser = require('../middleware/validateUser');
+const db = require('../../data/dbConfig');
 
 
-router.post('/register', (req, res) => {
+router.post('/register', uniqueUser, validateUser, (req, res) => {
+  const {password, username} = req.body;
+  const hash = bcrypt.hashSync(password, 8);
+
+
   res.end('implement register, please!');
   /*
     DO NOT EXCEED 2^8 ROUNDS OF HASHING!
@@ -23,12 +29,6 @@ router.post('/register', (req, res) => {
         "username": "Captain Marvel",
         "password": "2a$08$jG.wIGR2S4hxuyWNcBf9MuoC4y0dNy7qC/LbmtuFBSdIhWks2LhpG"
       }
-
-    3- On FAILED registration due to `username` or `password` missing from the request body,
-      the response body should include a string exactly as follows: "username and password required".
-
-    4- On FAILED registration due to the `username` being taken,
-      the response body should include a string exactly as follows: "username taken".
   */
 });
 
