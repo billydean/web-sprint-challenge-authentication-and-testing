@@ -13,7 +13,8 @@ const checkCredentials = async (req, res, next) => {
             })
         }
     } catch (err) {
-        next(err);
+        err.status = 401;
+        err.message = 'invalid credentials'
     }
 }
    module.exports = checkCredentials;

@@ -18,7 +18,7 @@ router.post('/register', validateUser, uniqueUser, (req, res, next) => {
     .catch(next);
 });
 
-router.post('/login', validateUser, checkCredentials, (req, res) => {
+router.post('/login', validateUser, checkCredentials, (req, res, next) => {
   function makeToken(user) {
     const payload = {
       subject: user.id,
